@@ -17,55 +17,45 @@ body {
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-inner"></nav>
-	<nav class="navbar navbar-inner navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="main/home.do" target="mainFrame">
-					<span class="second">
-						<i class="fa fa-book"></i> ATTEND
-					</span>
-				</a>
-			</div>
-
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Settings</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">${loginSessionKey.username}<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a tabindex="-1" href="#">My Account</a></li>
-							<li class="divider"></li>
-							<li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
-							<li class="divider visible-phone"></li>
-							<li><a tabindex="-1" href="login/logout.do">Logout</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
-	</nav>
-
-	<div class="sidebar-nav">
-		<div data-target="#dashboard-menu" class="nav-header" data-toggle="collapse">
-			<i class="icon-dashboard"></i>ATD
-		</div>
-		<ul id="dashboard-menu" class="nav nav-list collapse in">
-			<!-- <li><a href="attend/work.do" target="mainFrame">me</a></li> -->
-			<li><a href="attend/attend.do" target="mainFrame">attend</a></li>
+	<div class="layui-header header header-doc">
+		<ul class="layui-nav" lay-filter="">
+			<li class="layui-nav-item"><a class="brand-logo" href="login.jsp"> 
+				<i class="fa fa-book"></i> ATTEND
+			</a></li>
+			<li class="layui-nav-item pull-right"><a href="">Settings</a></li>
+			<li class="layui-nav-item pull-right">
+				<a href="javascript:;">username</a>
+				<dl class="layui-nav-child">
+					<!-- 二级菜单 -->
+					<dd> <a tabindex="-1" href="">My Account</a> </dd>
+					<dd> <a tabindex="-1" href="">Settings</a> </dd>
+					<dd> <a tabindex="-1" href="login/logout.do">Logout</a> </dd>
+				</dl></li>
 		</ul>
 	</div>
 
+	<div class="sidebar-nav">
+		<ul class="layui-nav layui-nav-tree layui-nav-side">
+		  <li class="layui-nav-item layui-nav-itemed">
+		    <a href="javascript:;">默认展开</a>
+		    <dl class="layui-nav-child">
+		      <dd><a href="javascript:;">选项1</a></dd>
+		      <dd><a href="javascript:;">选项2</a></dd>
+		      <dd><a href="">跳转</a></dd>
+		    </dl>
+		  </li>
+		  <li class="layui-nav-item">
+		    <a href="javascript:;">解决方案</a>
+		    <dl class="layui-nav-child">
+		      <dd><a href="">移动模块</a></dd>
+		      <dd><a href="">后台模版</a></dd>
+		      <dd><a href="">电商平台</a></dd>
+		    </dl>
+		  </li>
+		  <li class="layui-nav-item"><a href="">产品</a></li>
+		  <li class="layui-nav-item"><a href="">大数据</a></li>
+		</ul>
+	</div>
 	<div class="content">
 		<ul class="breadcrumb">
 			<li class="active"><a href="main/home.do" target="mainFrame">Home</a>
@@ -73,13 +63,6 @@ body {
 		</ul>
 		<iframe id="mainFrame" name="mainFrame" src = "main/home.do"
             frameborder="0" style="padding: 0px; width: 100%;"></iframe>
-        <!-- <footer>
-			<hr>
-			<p class="pull-right"> Edit by 
-			<a href="https://github.com/WaterBai/" title="WaterBAI" target="_blank">WaterBAI</a>
-			</p>
-			<p>&copy; 2017</p>
-		</footer> -->
 	</div>
 </body>
 <script type="text/javascript">
@@ -101,7 +84,10 @@ function reinitIframe() {
         iframe.height = height;  
     } catch (ex) {}
 }
-window.setInterval("reinitIframe()", 200);
+window.setInterval("reinitIframe()", 200); 
 
+layui.use('element', function() {
+	var element = layui.element();
+});
 </script>
 </html>

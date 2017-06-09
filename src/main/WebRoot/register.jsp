@@ -16,71 +16,85 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </style>
 </head>
 <body>
-	<div class="navbar navbar-inner">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="login.jsp">
-					<span class="second">
-						<i class="fa fa-book"></i> ATTEND
-					</span>
-				</a>
-			</div>
-		</div>	
+	<div class="layui-header header header-doc">
+		<ul class="layui-nav" lay-filter="">
+			<li class="layui-nav-item"><a class="brand-logo" href="login.jsp"> <i
+					class="fa fa-book"></i> ATTEND
+			</a></li>
+			<li class="layui-nav-item pull-right"><a href="login.jsp">用户登录</a></li>
+			<li class="layui-nav-item layui-this pull-right"><a href="register.jsp">用户注册</a></li>
+		</ul>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4" style="margin-top: 3em;">
 				<div class="panel panel-default">
-					<div class="panel-heading" style="font-size: 1.2em;">Sign In</div>
+					<div class="panel-heading" style="font-size: 1.2em;">注册</div>
 					<div class="panel-body">
-						<form action="login/register.do" method="post">
-							<div class="form-group">
-								<label for="userId">Username</label> 
-								<input type="text" class="form-control" name="userId" id="userId" placeholder="Username">
+						<form class="layui-form"  action="login/register.do" method="post">
+							<div class="layui-form-item">
+								<label class="layui-form-label">用户名</label>
+								<div class="layui-input-block">
+									<input type="text" name="userId" required lay-verify="required"
+										placeholder="输入用户名" autocomplete="off" class="layui-input">
+								</div>
 							</div>
-							<div class="form-group">
-								<label for="password">Password</label> 
-								<input type="password" class="form-control" name="password" id="password" placeholder="Password">
+							<div class="layui-form-item">
+								<label class="layui-form-label">密码</label>
+								<div class="layui-input-block">
+									<input type="password" name="password" required
+										lay-verify="required" placeholder="输入密码" autocomplete="off"
+										class="layui-input">
+								</div>
 							</div>
-							
-							<div class="form-group">
-								<label for="email">Email</label> 
-								<input type="text" class="form-control" name="email" id="email" placeholder="Email">
+							<div class="layui-form-item">
+								<label class="layui-form-label">邮箱</label>
+								<div class="layui-input-block">
+									<input type="email" name="email" required
+										lay-verify="required" placeholder="输入邮箱" autocomplete="off"
+										class="layui-input">
+								</div>
 							</div>
-							<div class="form-group">
-								<label for="phone">Phone</label> 
-								<input type="text" class="form-control" name="phone" id="phone" placeholder="phone">
+							<div class="layui-form-item">
+								<label class="layui-form-label">联系方式</label>
+								<div class="layui-input-block">
+									<input type="text" name="phone" required
+										lay-verify="required" placeholder="输入联系方式" autocomplete="off"
+										class="layui-input">
+								</div>
 							</div>
-							<div class="form-group">
-								<label for="sex">Sex</label> 
-								<label class="radio-inline">
-								  <input type="radio" name="sex" id="sex" value="0"> girl
-								</label>
-								<label class="radio-inline">
-								  <input type="radio" name="sex" id="sex" value="1"> boy
-								</label>
+							<div class="layui-form-item">
+								<label class="layui-form-label">性别</label>
+								<div class="layui-input-block">
+									<input type="radio" name="sex" value="男" title="男">
+									<input type="radio" name="sex" value="女" title="女" checked>
+									<input type="radio" name="sex" value="中性" title="中性" disabled>
+								</div>
 							</div>
-							<div class="pull-right">
-								<button type="reset" class="btn ">reset</button>
-								<button type="submit" class="btn btn-primary">register & login</button>
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<button class="layui-btn " lay-submit lay-filter="formDemo">立即提交</button>
+									<button type="reset" class="layui-btn layui-btn-primary ">重置</button>
+								</div>
 							</div>
-							<div class="clearfix"></div>
 						</form>
 					</div>
 				</div>
-				<p class="pull-right"><a href="login.jsp">here to login!</a></p> 
 			</div>
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
-
+layui.use('element', function() {
+	var element = layui.element();
+});
+layui.use('form', function() {
+	var form = layui.form();
+	//监听提交
+	form.on('submit(formDemo)', function(data) {
+		layer.msg(JSON.stringify(data.field));
+		return true;
+	});
+});
 </script>
 </html>
