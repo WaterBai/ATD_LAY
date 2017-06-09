@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+                        http://www.springframework.org/schema/context    
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/mvc    
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd    
+                        http://www.springframework.org/schema/tx 
+                     	http://www.springframework.org/schema/tx/spring-tx.xsd
+                     	http://www.springframework.org/schema/aop 
+                     	http://www.springframework.org/schema/aop/spring-aop.xsd ">
+	<context:property-placeholder location="classpath:/project.properties" />
+	<!-- 启动注解驱动的spring MVC功能,注册请求url和注解POJO类方法的映射 -->
+	<mvc:annotation-driven />
+	<!-- 扫描service自动注入为bean -->
+	<context:component-scan base-package="com.ssh" />
+	<!-- 自动扫描 -->
+	<!-- <context:component-scan base-package="com.ssh">
+		扫描时跳过 @Controller 注解的JAVA类（控制器）
+		<context:exclude-filter type="annotation"  
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan> -->
+	
+	<bean id="dynamicStatementBuilder"
+		class="com.ssh.db.resolver.builder.DefaultDynamicHibernateStatementBuilder">
+		<property name="fileNames">
+			<list>
+				<value>classpath:sql/*.sql.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+	<!--这里是对静态资源的映射 -->
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:interceptors>  
+        <!-- 多个拦截器，顺序执行     -->
+        <mvc:interceptor>  
+            <mvc:mapping path="/**"/>  
+            <!-- <mvc:exclude-mapping path="/"/>   -->
+			<mvc:exclude-mapping path="/login/**"/> 
+            <bean class="com.ssh.interceptor.LoginInterceptor"></bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors>
+	<!-- 事物管理器配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>  

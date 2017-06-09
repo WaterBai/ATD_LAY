@@ -1,0 +1,26 @@
+<!-- HOP Hibernate Dynamic Statement Mapping DTD. 
+<!DOCTYPE dynamic-hibernate-statement PUBLIC   
+    "-//Haier/HOP Hibernate Dynamic Statement DTD 1.0//EN"  
+    "http://www.haier.com/dtd/dynamic-hibernate-statement-1.0.dtd">  
+   
+这个文件时用来定义动态参数语句，类似itabis  
+-->  
+  
+<!-- 
+    The document root. 
+ -->  
+  
+<!ELEMENT dynamic-hibernate-statement (  
+    (hql|sql)*  
+)>  
+<!-- default: none -->  
+  
+<!-- The query element declares a named Hibernate query string -->  
+  
+<!ELEMENT hql (#PCDATA)>  
+    <!ATTLIST hql key CDATA #REQUIRED>  
+  
+<!-- The sql-query element declares a named SQL query string -->  
+  
+<!ELEMENT sql (#PCDATA)>  
+    <!ATTLIST sql key CDATA #REQUIRED>  
